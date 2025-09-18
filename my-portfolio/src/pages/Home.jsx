@@ -1,117 +1,131 @@
-import { useEffect, useState } from "react";
-import ProjectCard from "../components/ProjectCard.jsx";
-import projects from "../data/projects.js";
+import ProjectCard from "../components/ProjectCard";
+import projects from "../data/projects";
 
 export default function Home() {
   const featured = projects.slice(0, 2);
 
-  // Slower, nicer typewriter with pauses
-  const phrases = ["Web Developer", "Designer", "Stats + ML @ UC Davis"];
-  const [idx, setIdx] = useState(0);
-  const [text, setText] = useState("");
-  const [phase, setPhase] = useState("type"); // "type" | "pause" | "erase"
-
-  useEffect(() => {
-    let timer;
-    const current = phrases[idx];
-
-    if (phase === "type") {
-      timer = setTimeout(() => {
-        const next = current.slice(0, text.length + 1);
-        setText(next);
-        if (next.length === current.length) setPhase("pause");
-      }, 120); // slower typing
-    } else if (phase === "pause") {
-      timer = setTimeout(() => setPhase("erase"), 900); // longer pause at end
-    } else if (phase === "erase") {
-      timer = setTimeout(() => {
-        const next = text.slice(0, -1);
-        setText(next);
-        if (next.length === 0) {
-          setPhase("type");
-          setIdx((i) => (i + 1) % phrases.length);
-        }
-      }, 70); // erase speed
-    }
-
-    return () => clearTimeout(timer);
-  }, [text, phase, idx]);
+  // spotlight hover for featured projects
+  const handleSpotlight = (e) => {
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    el.style.setProperty("--mx", x + "%");
+    el.style.setProperty("--my", y + "%");
+  };
 
   return (
     <>
-      {/* HERO (more filled: portrait on right) */}
+      {/* HERO */}
       <section className="hero">
         <div className="container hero-grid">
-          {/* left copy */}
+          {/* LEFT: text */}
           <div className="hero-text">
-            <p className="eyebrow">HI THERE,</p>
+            <p className="eyebrow">Welcome 👋</p>
             <h1 className="hero-title">
-              I am <span className="gradient">{text}</span>
+              I’m <span className="gradient">Sara Koshy</span>
               <span className="cursor">|</span>
             </h1>
             <p className="hero-sub">
-              I craft clean, fast interfaces and ship quickly. Focused on React,
-              design systems, and data-driven projects.
+              Third-year Statistics major at UC Davis on the Machine Learning &
+              Data Science track. I design and build interactive, modern web
+              experiences with a focus on <b>React</b>, <b>design systems</b>,
+              and <b>data-driven storytelling</b>.
+            </p>
+            <p className="hero-sub" style={{ marginTop: "12px" }}>
+              I love combining <b>creativity</b> and <b>tech</b> — from
+              designing event graphics for the Indian Student Association to
+              shipping full React apps like a CPA website with a working backend.
             </p>
             <div className="hero-actions">
-              <a className="btn btn-primary" href="mailto:you@example.com">Hire Me</a>
-              <a className="btn btn-ghost" href="/projects">Portfolio</a>
-              <a className="btn btn-ghost" href="/resume">Resume</a>
+              <a
+                className="btn btn-primary"
+                href="https://www.linkedin.com/in/sarakoshy"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Let’s Connect
+              </a>
+              <a className="btn btn-ghost" href="/projects">
+                See My Work
+              </a>
+              <a className="btn btn-ghost" href="/resume">
+                Download CV
+              </a>
             </div>
 
-            {/* quick stats row to fill space */}
-            <div className="stats">
-              <div className="stat">
+            {/* quick stats */}
+            <div
+              style={{
+                display: "flex",
+                gap: "16px",
+                marginTop: "22px",
+                flexWrap: "wrap",
+              }}
+            >
+              <div className="stat-box">
                 <div className="stat-num">15+</div>
-                <div className="stat-label">Projects</div>
+                <div className="stat-label">Projects Completed</div>
               </div>
-              <div className="stat">
+              <div className="stat-box">
                 <div className="stat-num">3 yrs</div>
-                <div className="stat-label">React</div>
+                <div className="stat-label">Frontend Experience</div>
               </div>
-              <div className="stat">
-                <div className="stat-num">7</div>
-                <div className="stat-label">Tools /wk</div>
+              <div className="stat-box">
+                <div className="stat-num">∞</div>
+                <div className="stat-label">Passion for Design</div>
               </div>
             </div>
           </div>
 
-          {/* right portrait */}
-          <div className="hero-photo portrait-frame">
+          {/* RIGHT: bigger vibrant portrait */}
+          <div
+            className="hero-photo"
+            style={{ display: "flex", justifyContent: "center" }}
+          >
             <div className="glow"></div>
-            <img src="/portrait.jpg" alt="Portrait" />
+            <img
+              src="/portrait.jpg"
+              alt="Sara Portrait"
+              style={{
+                width: "260px",
+                height: "260px",
+                objectFit: "cover",
+                borderRadius: "999px", // circle
+                border: "3px solid transparent",
+                backgroundImage:
+                  "linear-gradient(var(--bg), var(--bg)), linear-gradient(90deg, var(--brand), var(--primary), var(--accent))",
+                backgroundOrigin: "border-box",
+                backgroundClip: "content-box, border-box",
+                boxShadow:
+                  "0 15px 45px rgba(99,102,241,.4), 0 0 35px rgba(217,70,239,.3), 0 0 20px rgba(34,211,238,.25)",
+                transition: "transform .3s ease, box-shadow .3s ease",
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = "scale(1.05)";
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            />
           </div>
         </div>
       </section>
 
-      {/* tiny tech ticker to add motion */}
-      <div className="ticker">
-        <div className="ticker-track">
-          <span>React</span><span>Vite</span><span>CSS</span>
-          <span>Express</span><span>MongoDB</span><span>UI/UX</span>
-          <span>Design Systems</span><span>Accessibility</span>
-          <span>React</span><span>Vite</span><span>CSS</span>
-          <span>Express</span><span>MongoDB</span><span>UI/UX</span>
-        </div>
-      </div>
-
-      {/* Featured projects (unchanged structure, wrapped in spotlight) */}
+      {/* FEATURED PROJECTS */}
       <section className="container section">
-        <h2 className="section-title">Featured</h2>
-        <p className="muted">A couple of recent highlights.</p>
-        <div className="grid2">
+        <h2 className="section-title">Featured Projects</h2>
+        <p className="muted">
+          A glimpse of the work I’ve been creating lately.
+        </p>
+
+        <div className="grid2" style={{ marginTop: 20 }}>
           {featured.map((p) => (
             <div
               key={p.title}
-              className="card hover-raise spotlight-wrap"
-              onMouseMove={(e) => {
-                const el = e.currentTarget;
-                const r = el.getBoundingClientRect();
-                const x = ((e.clientX - r.left) / r.width) * 100;
-                const y = ((e.clientY - r.top) / r.height) * 100;
-                el.style.setProperty("--mx", x + "%");
-                el.style.setProperty("--my", y + "%");
-              }}
+              className="card hover-raise"
+              onMouseMove={handleSpotlight}
+              style={{ position: "relative" }}
             >
               <div className="card-spotlight" />
               <ProjectCard project={p} />
@@ -120,35 +134,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* small image gallery to make page feel fuller */}
-      <section className="container section">
-        <h2 className="section-title">Snapshots</h2>
-        <p className="muted">A peek at recent design/dev moments.</p>
-        <div className="gallery3">
-          <figure className="gallery-card">
-            <img src="/gallery1.jpg" alt="Work sample 1" />
-            <figcaption>CPA site UI</figcaption>
-          </figure>
-          <figure className="gallery-card">
-            <img src="/gallery2.jpg" alt="Work sample 2" />
-            <figcaption>ISA event page</figcaption>
-          </figure>
-          <figure className="gallery-card">
-            <img src="/gallery3.jpg" alt="Work sample 3" />
-            <figcaption>Sticky notes app</figcaption>
-          </figure>
-        </div>
-      </section>
-
       {/* CTA */}
       <section className="cta">
         <div className="container cta-card">
           <div className="bg-gradient"></div>
-          <h3>Let’s build something great</h3>
-          <p>I’m open to internships and collabs in design and front-end.</p>
+          <h3>Open to Internships & Collaboration ✨</h3>
+          <p>
+            I bring together <b>statistics</b>, <b>web development</b>, and{" "}
+            <b>design</b> to create solutions that are both functional and
+            visually engaging. Let’s build something impactful!
+          </p>
           <div className="hero-actions">
-            <a className="btn btn-primary" href="mailto:you@example.com">Email me</a>
-            <a className="btn btn-ghost" href="/resume">Download resume</a>
+            <a
+              className="btn btn-primary"
+              href="https://www.linkedin.com/in/sarakoshy"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Let’s Connect
+            </a>
+            <a className="btn btn-ghost" href="/resume">
+              View Resume
+            </a>
           </div>
         </div>
       </section>
