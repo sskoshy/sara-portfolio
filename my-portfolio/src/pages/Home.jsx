@@ -78,36 +78,17 @@ export default function Home() {
             </div>
           </div>
 
-          {/* RIGHT: bigger vibrant portrait */}
-          <div
-            className="hero-photo"
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <div className="glow"></div>
-            <img
-              src="/portrait.jpg"
-              alt="Sara Portrait"
-              style={{
-                width: "260px",
-                height: "260px",
-                objectFit: "cover",
-                borderRadius: "999px", // circle
-                border: "3px solid transparent",
-                backgroundImage:
-                  "linear-gradient(var(--bg), var(--bg)), linear-gradient(90deg, var(--brand), var(--primary), var(--accent))",
-                backgroundOrigin: "border-box",
-                backgroundClip: "content-box, border-box",
-                boxShadow:
-                  "0 15px 45px rgba(99,102,241,.4), 0 0 35px rgba(217,70,239,.3), 0 0 20px rgba(34,211,238,.25)",
-                transition: "transform .3s ease, box-shadow .3s ease",
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = "scale(1.05)";
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = "scale(1)";
-              }}
-            />
+          {/* RIGHT: circular portrait with glow + hover clear */}
+          <div className="hero-photo" style={{ display: "flex", justifyContent: "center" }}>
+            <div className="about-hero-photo">
+              <div className="ring-glow"></div>
+              <img
+                src="/portrait.jpg"
+                alt="Sara Portrait"
+                className="hero-portrait"
+                style={{ borderRadius: "999px" }} // ensures circle shape
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -115,9 +96,7 @@ export default function Home() {
       {/* FEATURED PROJECTS */}
       <section className="container section">
         <h2 className="section-title">Featured Projects</h2>
-        <p className="muted">
-          A glimpse of the work I’ve been creating lately.
-        </p>
+        <p className="muted">A glimpse of the work I’ve been creating lately.</p>
 
         <div className="grid2" style={{ marginTop: 20 }}>
           {featured.map((p) => (

@@ -53,7 +53,7 @@ export default function Navbar() {
 
         <button
           className={`nav-toggle ${open ? "open" : ""}`}
-          onClick={() => setOpen(v => !v)}
+          onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={open}
           aria-controls="primary-navigation"
@@ -65,11 +65,24 @@ export default function Navbar() {
 
         {/* Desktop menu */}
         <nav className="nav-menu" aria-label="Primary">
-          <NavLink to="/" className={link} end>Home</NavLink>
-          <NavLink to="/about" className={link}>About</NavLink>
-          <NavLink to="/projects" className={link}>Projects</NavLink>
-          <NavLink to="/resume" className={link}>Resume</NavLink>
-          <NavLink to="/contact" className={link}>Contact</NavLink>
+          <NavLink to="/" className={link} end>
+            Home
+          </NavLink>
+          <NavLink to="/about" className={link}>
+            About
+          </NavLink>
+          <NavLink to="/projects" className={link}>
+            Projects
+          </NavLink>
+          <NavLink to="/design-portfolio" className={link}>
+            Design Portfolio
+          </NavLink>
+          <NavLink to="/resume" className={link}>
+            Resume
+          </NavLink>
+          <NavLink to="/contact" className={link}>
+            Contact
+          </NavLink>
         </nav>
       </div>
 
@@ -79,11 +92,24 @@ export default function Navbar() {
         id="primary-navigation"
         ref={menuRef}
       >
-        <NavLink to="/" className={link} end>Home</NavLink>
-        <NavLink to="/about" className={link}>About</NavLink>
-        <NavLink to="/projects" className={link}>Projects</NavLink>
-        <NavLink to="/resume" className={link}>Resume</NavLink>
-        <NavLink to="/contact" className={link}>Contact</NavLink>
+        <NavLink to="/" className={link} end>
+          Home
+        </NavLink>
+        <NavLink to="/about" className={link}>
+          About
+        </NavLink>
+        <NavLink to="/projects" className={link}>
+          Projects
+        </NavLink>
+        <NavLink to="/design-portfolio" className={link}>
+          Design Portfolio
+        </NavLink>
+        <NavLink to="/resume" className={link}>
+          Resume
+        </NavLink>
+        <NavLink to="/contact" className={link}>
+          Contact
+        </NavLink>
       </div>
     </header>
   );

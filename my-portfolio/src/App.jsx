@@ -8,6 +8,7 @@ import Projects from "./pages/Projects.jsx";
 import Resume from "./pages/Resume.jsx";
 import Contact from "./pages/Contact.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import DesignPortfolio from "./pages/DesignPortfolio.jsx";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/design-portfolio" element={<DesignPortfolio />} />
           <Route path="/resume" element={<Resume />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />

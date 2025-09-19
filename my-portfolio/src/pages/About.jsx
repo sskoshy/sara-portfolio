@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 const TABS = ["Skills", "Experience", "Education"];
 
@@ -16,17 +16,41 @@ function SkillBar({ label, level }) {
   );
 }
 
-function Badge({ text }) {
-  return <span className="badge">{text}</span>;
+function Badge({ text, ...props }) {
+  return (
+    <span className="badge" {...props}>
+      {text}
+    </span>
+  );
 }
 
 export default function About() {
   const [tab, setTab] = useState("Skills");
 
+  // === Spotlight handlers (cursor-follow glow) ===
+  const onSpotlightMove = useCallback((e) => {
+    const el = e.currentTarget;
+    const r = el.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    el.style.setProperty("--mx", x + "%");
+    el.style.setProperty("--my", y + "%");
+  }, []);
+
+  const onSpotlightLeave = useCallback((e) => {
+    const el = e.currentTarget;
+    el.style.setProperty("--mx", "50%");
+    el.style.setProperty("--my", "50%");
+  }, []);
+
   return (
     <section className="section container">
       {/* INTRO CARD */}
-      <div className="about-hero card">
+      <div
+        className="about-hero card spotlight hover-raise"
+        onMouseMove={onSpotlightMove}
+        onMouseLeave={onSpotlightLeave}
+      >
         <div className="about-hero-text">
           <h2 className="section-title">About Me</h2>
           <p className="muted">
@@ -52,19 +76,35 @@ export default function About() {
 
       {/* QUICK FACTS */}
       <div className="facts">
-        <div className="fact">
+        <div
+          className="fact spotlight"
+          onMouseMove={onSpotlightMove}
+          onMouseLeave={onSpotlightLeave}
+        >
           <div className="fact-num">15+</div>
           <div className="fact-label">Projects</div>
         </div>
-        <div className="fact">
+        <div
+          className="fact spotlight"
+          onMouseMove={onSpotlightMove}
+          onMouseLeave={onSpotlightLeave}
+        >
           <div className="fact-num">3 yrs</div>
           <div className="fact-label">Frontend</div>
         </div>
-        <div className="fact">
+        <div
+          className="fact spotlight"
+          onMouseMove={onSpotlightMove}
+          onMouseLeave={onSpotlightLeave}
+        >
           <div className="fact-num">UC Davis</div>
           <div className="fact-label">Stats (ML/DS)</div>
         </div>
-        <div className="fact">
+        <div
+          className="fact spotlight"
+          onMouseMove={onSpotlightMove}
+          onMouseLeave={onSpotlightLeave}
+        >
           <div className="fact-num">Open</div>
           <div className="fact-label">Internships</div>
         </div>
@@ -89,43 +129,50 @@ export default function About() {
         </div>
 
         <div className="tab-panels">
-          
           {/* SKILLS */}
-
           {tab === "Skills" && (
-            <div className="tab-panel" id="panel-Skills" role="tabpanel" aria-labelledby="tab-Skills">
+            <div
+              className="tab-panel"
+              id="panel-Skills"
+              role="tabpanel"
+              aria-labelledby="tab-Skills"
+            >
               <h3 className="card-title">Core Frontend</h3>
               <div className="badges">
-                <Badge text="React" />
-                <Badge text="JavaScript (ES202x)" />
-                <Badge text="CSS / Design Systems" />
-                <Badge text="Accessibility (A11y)" />
+                <Badge text="React" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                <Badge text="JavaScript (ES202x)" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                <Badge text="CSS / Design Systems" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                <Badge text="Accessibility (A11y)" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
               </div>
 
               <h3 className="card-title mt">Data & Backend</h3>
               <div className="badges">
-                <Badge text="R / Data Viz" />
-                <Badge text="Express / REST APIs" />
-                <Badge text="MongoDB Atlas" />
+                <Badge text="R / Data Viz" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                <Badge text="Express / REST APIs" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                <Badge text="MongoDB Atlas" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
               </div>
 
               <h3 className="card-title mt">Tools I Use</h3>
               <div className="badges">
-                <Badge text="Vite" />
-                <Badge text="React Router" />
-                <Badge text="Figma" />
-                <Badge text="Illustrator" />
-                <Badge text="Canva" />
-                <Badge text="Git / GitHub" />
-                <Badge text="Vercel" />
+                <Badge text="Vite" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                <Badge text="React Router" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                <Badge text="Figma" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                <Badge text="Illustrator" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                <Badge text="Canva" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                <Badge text="Git / GitHub" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                <Badge text="Vercel" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
               </div>
             </div>
           )}
 
-
           {/* EXPERIENCE */}
           {tab === "Experience" && (
-            <div className="tab-panel" id="panel-Experience" role="tabpanel" aria-labelledby="tab-Experience">
+            <div
+              className="tab-panel"
+              id="panel-Experience"
+              role="tabpanel"
+              aria-labelledby="tab-Experience"
+            >
               <div className="timeline">
                 <div className="tl-item">
                   <div className="tl-dot" />
@@ -139,9 +186,9 @@ export default function About() {
                       and created a reusable UI kit to speed up new page creation.
                     </p>
                     <div className="badges">
-                      <Badge text="Design System" />
-                      <Badge text="Branding" />
-                      <Badge text="React UI" />
+                      <Badge text="Design System" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                      <Badge text="Branding" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                      <Badge text="React UI" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
                     </div>
                   </div>
                 </div>
@@ -158,9 +205,9 @@ export default function About() {
                       and a client portal concept. Deployed and iterated from feedback.
                     </p>
                     <div className="badges">
-                      <Badge text="Express" />
-                      <Badge text="MongoDB" />
-                      <Badge text="React" />
+                      <Badge text="Express" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                      <Badge text="MongoDB" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                      <Badge text="React" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
                     </div>
                   </div>
                 </div>
@@ -177,9 +224,9 @@ export default function About() {
                       ML foundations, and communicating insights clearly.
                     </p>
                     <div className="badges">
-                      <Badge text="R / Viz" />
-                      <Badge text="React" />
-                      <Badge text="A11y" />
+                      <Badge text="R / Viz" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                      <Badge text="React" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
+                      <Badge text="A11y" className="spotlight" onMouseMove={onSpotlightMove} onMouseLeave={onSpotlightLeave} />
                     </div>
                   </div>
                 </div>
@@ -189,9 +236,18 @@ export default function About() {
 
           {/* EDUCATION */}
           {tab === "Education" && (
-            <div className="tab-panel" id="panel-Education" role="tabpanel" aria-labelledby="tab-Education">
+            <div
+              className="tab-panel"
+              id="panel-Education"
+              role="tabpanel"
+              aria-labelledby="tab-Education"
+            >
               <div className="edu-grid">
-                <div className="card">
+                <div
+                  className="card spotlight hover-raise"
+                  onMouseMove={onSpotlightMove}
+                  onMouseLeave={onSpotlightLeave}
+                >
                   <h3 className="card-title">University of California, Davis</h3>
                   <p className="muted">B.S. Statistics — Machine Learning & Data Science Track</p>
                   <ul className="list">
@@ -200,7 +256,11 @@ export default function About() {
                     <li>Focus: Frontend engineering, design systems, storytelling with data</li>
                   </ul>
                 </div>
-                <div className="card">
+                <div
+                  className="card spotlight hover-raise"
+                  onMouseMove={onSpotlightMove}
+                  onMouseLeave={onSpotlightLeave}
+                >
                   <h3 className="card-title">Certs / Extras</h3>
                   <ul className="list">
                     <li>Web Accessibility Basics (self-study)</li>
